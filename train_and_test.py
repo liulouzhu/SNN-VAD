@@ -8,7 +8,7 @@ def train(args, dataloader, model_MT, optimizer_MT, criterion, logger):
     with torch.set_grad_enabled(True):
         model_MT.train()
         for i, (f_f, label) in enumerate(dataloader):
-            seq_len = torch.sum(torch.max(torch.abs(f_v), dim=2)[0] > 0, 1)
+            seq_len = torch.sum(torch.max(torch.abs(f_f), dim=2)[0] > 0, 1)
             f_f = f_f[:, :torch.max(seq_len), :]
             f_f, label = f_f.float().cuda(), label.float().cuda()
             MIL_logits = model_MT(f_f, seq_len)

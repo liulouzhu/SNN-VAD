@@ -38,9 +38,9 @@ class  Dataset(data.Dataset):
         else:
             f_f = process_feat(f_f, self.max_seqlen, is_random=False)
             if self.return_name == True:
-                file_name = self.list[index].strip('\n').split('/')[-1][:-7]
+                file_name = self.flow_list[index].strip('\n').split('/')[-1][:-7]
                 return  f_f, file_name
             return f_f, label
 
     def __len__(self):
-        return len(self.list)
+        return len(self.flow_list)
