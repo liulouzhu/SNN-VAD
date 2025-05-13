@@ -38,13 +38,10 @@ class ann_vad(nn.Module):
         
         # 使用单模态Transformer
         f_f = self.mm_transformer(f_f)
-
-        print(f_f.shape)
         
         # 多示例学习分类
         MIL_logits = self.MIL(f_f, seq_len)
         
-        # 不再需要计算对比损失
         return MIL_logits # 返回预测结果和零损失
     
 class MIL(nn.Module):

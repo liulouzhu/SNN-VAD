@@ -2,16 +2,19 @@ from torch.utils.data import DataLoader
 import torch.optim as optim
 import torch
 import time
-import math
 import numpy as np
 import random
 import os
 from ANN import ann_vad
+# from SNN import snn_vad
+from snntest import snn_test
 from train_and_test import train
 from train_and_test import test
 import option
 from utils import Prepare_logger
 from load_dataset import Dataset
+
+torch.autograd.set_detect_anomaly(True)
 
 def setup_seed(seed):
     torch.manual_seed(seed)
@@ -33,7 +36,10 @@ if __name__ == '__main__':
     test_loader = DataLoader(Dataset(args, test_mode=True),
                              batch_size=5, shuffle=False,
                              num_workers=args.workers, pin_memory=True)
-    model_MT = ann_vad(args).cuda()
+    if args.model_name == 'SNN':
+        model_MT = snn_test(args).cuda()
+    elif args.model_name == 'ANN':
+        model_MT = ann_vad(args).cuda()
     gt = np.load(args.gt)
 
     if args.eval:
