@@ -38,6 +38,8 @@ class ann_vad(nn.Module):
         
         # 使用单模态Transformer
         f_f = self.mm_transformer(f_f)
+
+        print(f_f.shape)
         
         # 多示例学习分类
         MIL_logits = self.MIL(f_f, seq_len)
